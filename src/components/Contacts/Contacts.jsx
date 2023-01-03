@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux/es';
-// import { removeContactFromState } from 'redux/phonebookSlice';
-
+import { removeContact } from 'redux/operationPhonebook';
 import StyleList from '../ComponentStyles/PhonebookStyles';
 
 const { ListOfContactsStyle, BtnDeleteContact, IsEmptyList } = StyleList;
@@ -13,7 +12,7 @@ const Contacts = props => {
       {contacts.map(elem => (
         <Contact
           name={elem.name}
-          number={elem.number}
+          phone={elem.phone}
           id={elem.id}
           key={elem.id}
         />
@@ -31,7 +30,7 @@ Contacts.propTypes = {
     PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
-        number: PropTypes.string.isRequired,
+        phone: PropTypes.string.isRequired,
         id: PropTypes.string.isRequired,
       }),
       PropTypes.array
@@ -40,16 +39,16 @@ Contacts.propTypes = {
 };
 
 const Contact = props => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const contsctToRemove = event => {
-    // dispatch(removeContactFromState(event.target.attributes.id.nodeValue));
+    dispatch(removeContact(event.target.attributes.id.nodeValue));
   };
 
-  const { name, number, id } = props;
+  const { name, phone, id } = props;
   return (
     <li>
-      {name}: <span>{number}</span>
+      {name}: <span>{phone}</span>
       <BtnDeleteContact type="button" id={id} onClick={contsctToRemove}>
         Delete
       </BtnDeleteContact>
@@ -59,7 +58,7 @@ const Contact = props => {
 
 Contact.propTypes = {
   name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
 

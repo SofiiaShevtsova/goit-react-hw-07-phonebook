@@ -31,3 +31,13 @@ export const addContact = (contact) => async dispatch => {
         dispatch(addContactError(e))
   }
 };
+
+export const removeContact = (id) => async dispatch => {
+    try {
+      dispatch(removeContactProgress())
+        const response = await axios.delete(`/contacts/${id}`);
+        dispatch(removeContactSuccess(response.data.id))
+    } catch (e) {
+        dispatch(removeContactError(e))
+  }
+};

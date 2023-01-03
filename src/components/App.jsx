@@ -1,5 +1,6 @@
-import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useMemo, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts } from 'redux/operationPhonebook';
 
 import Section from './Section/Section';
 import Contacts from './Contacts/Contacts';
@@ -7,6 +8,12 @@ import FormAddContact from './FormAddContact/FormAddContact';
 import FilterContact from './FilterContact/FilterContact';
 
 export const App = () => {
+  const dispatch = useDispatch();
+
+useEffect(() => {
+    dispatch(getContacts());
+  }, [dispatch]);
+
   const contactsState = useSelector(state => state.phonebook.contacts);
   const filterContacts = useSelector(state => state.phonebook.filter);
 

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getContacts, addContact, removeContact } from 'service/phonebookAPI';
 
 const initialState = {
   contacts: [],

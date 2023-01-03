@@ -1,12 +1,9 @@
 import { useDispatch } from 'react-redux';
-// import { addContactsToState } from 'redux/phonebookSlice';
 import { addContact } from 'redux/operationPhonebook';
 
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import StyleList from '../ComponentStyles/PhonebookStyles';
-
-import { nanoid } from 'nanoid';
 
 const { FormStyle, FieldStyles, BtnStyle, ErrorMessageStyle } = StyleList;
 
