@@ -19,12 +19,8 @@ export const App = () => {
   const filterContacts = useSelector(state => state.phonebook.filter);
   const isLoading = useSelector(state => state.phonebook.isLoading);
 
-  const contactToFind = useMemo(
-    () =>
-      contactsState.filter(elem =>
-        elem.name.toLowerCase().includes(filterContacts)
-      ),
-    [filterContacts, contactsState]
+  const contactToFind = contactsState.filter(elem =>
+    elem.name.toLowerCase().includes(filterContacts)
   );
 
   return (
