@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getContacts, removeContact, addContact } from './operationPhonebook';
 
 const initialState = {
   contacts: [],
@@ -20,15 +21,27 @@ export const phonebookSlice = createSlice({
   name: 'phonebook',
   initialState,
   reducers: {
-    getContactsProgress: statusProgress,
-    getContactsSuccess: (state, action) => {
+    findContact: (state, action) => {
+      state.filter = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getContacts.pending, (state) => {
+      statusProgress(state);
+    })
+    .addCase(getContacts.fulfilled, (state, action) => {
       state.contacts = [...action.payload];
       state.isLoading = false;
       state.error = null;
-    },
-    getContactsError: statusError,
-    addContactProgress: statusProgress,
-    addContactSuccess: (state, action) => {
+    })
+    .addCase(getContacts.rejected, (state, action) => {
+      statusError(state, action);
+    })
+          .addCase(addContact.pending, (state) => {
+      statusProgress(state);
+    })
+    .addCase(addContact.fulfilled, (state, action) => {
       if (state.contacts.find(elem => elem.name === action.payload.name)) {
         alert('You have this contacts');
         state.isLoading = false;
@@ -38,34 +51,28 @@ export const phonebookSlice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.contacts = [...state.contacts, action.payload];
-    },
-    addContactError: statusError,
-    removeContactProgress: statusProgress,
-    removeContactSuccess: (state, action) => {
+    })
+    .addCase(addContact.rejected, (state, action) => {
+      statusError(state, action);
+    })
+      .addCase(removeContact.pending, (state) => {
+      statusProgress(state);
+    })
+    .addCase(removeContact.fulfilled, (state, action) => {
       state.contacts = state.contacts.filter(
         elem => elem.id !== action.payload
       );
       state.isLoading = false;
       state.error = null;
-    },
-    removeContactError: statusError,
-    findContact: (state, action) => {
-      state.filter = action.payload;
-    },
+    })
+    .addCase(removeContact.rejected, (state, action) => {
+      statusError(state, action);
+    })
   },
 });
 
 export const {
-  getContactsProgress,
-  getContactsSuccess,
-  getContactsError,
-  addContactProgress,
-  addContactSuccess,
-  addContactError,
-  removeContactError,
-  removeContactProgress,
-  removeContactSuccess,
-  findContact,
+  findContact
 } = phonebookSlice.actions;
 
 export default phonebookSlice.reducer;

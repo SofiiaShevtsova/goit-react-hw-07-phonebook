@@ -1,43 +1,34 @@
-import axios from "axios";
-import {   getContactsProgress,
-  getContactsSuccess,
-  getContactsError,
-  addContactProgress,
-  addContactSuccess,
-  addContactError,
-  removeContactError,
-  removeContactProgress,
-  removeContactSuccess
-  } from "./phonebookSlice";
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = "https://63af5dd2cb0f90e514726ce0.mockapi.io/contacts";
+axios.defaults.baseURL = 'https://63af5dd2cb0f90e514726ce0.mockapi.io/contacts';
 
-export const getContacts = () => async dispatch => {
+export const getContacts = createAsyncThunk(
+  'contacts/getContacts',
+  async () => {
     try {
-      dispatch(getContactsProgress())
-        const response = await axios.get("/contacts");
-        dispatch(getContactsSuccess(response.data))
-    } catch (e) {
-        dispatch(getContactsError(e))
+      const response = await axios.get('/contacts');
+      return response.data;
+    } catch (e) {return e}
   }
-};
+);
 
-export const addContact = (contact) => async dispatch => {
+export const addContact = createAsyncThunk(
+  'contacts/addContacts',
+  async (contact) => {
     try {
-      dispatch(addContactProgress())
-        const response = await axios.post("/contacts", contact);
-        dispatch(addContactSuccess(response.data))
-    } catch (e) {
-        dispatch(addContactError(e))
+    const response = await axios.post('/contacts', contact);
+      return response.data;
+    } catch (e) {return e}
   }
-};
+);
 
-export const removeContact = (id) => async dispatch => {
+export const removeContact = createAsyncThunk(
+  'contacts/removeContacts',
+  async (id) => {
     try {
-      dispatch(removeContactProgress())
-        const response = await axios.delete(`/contacts/${id}`);
-        dispatch(removeContactSuccess(response.data.id))
-    } catch (e) {
-        dispatch(removeContactError(e))
+    const response = await axios.delete(`/contacts/${id}`);
+      return response.data.id;
+    } catch (e) {return e}
   }
-};
+);
