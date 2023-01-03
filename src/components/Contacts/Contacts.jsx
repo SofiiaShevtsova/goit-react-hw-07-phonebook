@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux/es';
-import { removeContactFromState } from 'redux/phonebookSlice';
+// import { removeContactFromState } from 'redux/phonebookSlice';
 
 import StyleList from '../ComponentStyles/PhonebookStyles';
 
@@ -40,10 +40,10 @@ Contacts.propTypes = {
 };
 
 const Contact = props => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const contsctToRemove = event => {
-    dispatch(removeContactFromState(event.target.attributes.id.nodeValue));
+    // dispatch(removeContactFromState(event.target.attributes.id.nodeValue));
   };
 
   const { name, number, id } = props;

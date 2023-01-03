@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { addContactsToState } from 'redux/phonebookSlice';
+// import { addContactsToState } from 'redux/phonebookSlice';
+import { addContact } from 'redux/operationPhonebook';
 
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -42,10 +43,9 @@ const FormAddContact = props => {
         validationSchema={SignupSchema}
         onSubmit={(values, actions) => {
           dispatch(
-            addContactsToState({
+            addContact({
               name: values.name.trim(),
-              id: `${nanoid()}`,
-              number: values.number.trim(),
+              phone: values.number.trim(),
             })
           );
           actions.setSubmitting(false);
