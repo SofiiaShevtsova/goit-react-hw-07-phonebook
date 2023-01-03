@@ -6,16 +6,18 @@ import Section from './Section/Section';
 import Contacts from './Contacts/Contacts';
 import FormAddContact from './FormAddContact/FormAddContact';
 import FilterContact from './FilterContact/FilterContact';
+import Loading from './Loading/Loading';
 
 export const App = () => {
   const dispatch = useDispatch();
 
-useEffect(() => {
+  useEffect(() => {
     dispatch(getContacts());
   }, [dispatch]);
 
   const contactsState = useSelector(state => state.phonebook.contacts);
   const filterContacts = useSelector(state => state.phonebook.filter);
+  const isLoading = useSelector(state => state.phonebook.isLoading);
 
   const contactToFind = useMemo(
     () =>
@@ -40,7 +42,7 @@ useEffect(() => {
       </Section>
       <Section title={'Contacts'}>
         <FilterContact />
-        <Contacts contacts={contactToFind} />
+        {isLoading ? <Loading /> : <Contacts contacts={contactToFind} />}
       </Section>
     </div>
   );

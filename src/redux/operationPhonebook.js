@@ -9,26 +9,32 @@ export const getContacts = createAsyncThunk(
     try {
       const response = await axios.get('/contacts');
       return response.data;
-    } catch (e) {return e}
+    } catch (e) {
+      return e;
+    }
   }
 );
 
 export const addContact = createAsyncThunk(
   'contacts/addContacts',
-  async (contact) => {
+  async contact => {
     try {
-    const response = await axios.post('/contacts', contact);
+      const response = await axios.post('/contacts', contact);
       return response.data;
-    } catch (e) {return e}
+    } catch (e) {
+      return e;
+    }
   }
 );
 
 export const removeContact = createAsyncThunk(
   'contacts/removeContacts',
-  async (id) => {
+  async id => {
     try {
-    const response = await axios.delete(`/contacts/${id}`);
+      const response = await axios.delete(`/contacts/${id}`);
       return response.data.id;
-    } catch (e) {return e}
+    } catch (e) {
+      return e;
+    }
   }
 );
